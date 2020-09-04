@@ -69,7 +69,7 @@ router.delete('/:id', (req, res) => {
 });
 
 // PUT - Update the project by id
-router.put('/:id', (req, res) => {
+router.put('/:id', validateProjectId, (req, res) => {
     Projects.update(req.params.id, req.body)
     .then(project => {
         if (project) {
@@ -99,6 +99,21 @@ router.get('/:id/actions', (req, res) => {
         });
       });
 }); 
+
+function validateProjectId(req, res, next) {
+    Projects.get(req.params.id)
+    .then(project => {
+        if (project) {
+            console.log("project", project);
+            next();
+        } else {
+            res.status(400).json({ message: "invalid project id" });
+        }
+    })
+    .catch(error => {
+        res.status(500).json({ message: error.message });
+    });
+}
 
 module.exports = router; 
 
