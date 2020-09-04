@@ -6,7 +6,7 @@ const router = express.Router();
 
 // GET - Get all projects
 router.get('/', (req, res) => {
-    Projects.get(req.query)
+    Projects.get()
         .then(projects => {
             res.status(200).json(projects);
         })
@@ -38,7 +38,8 @@ router.get('/:id', (req, res) => {
 
 // POST - Create a new Project
 router.post('/', (req, res) => {
-    Projects.insert(req.body)
+    const project = req.body; 
+    Projects.insert(project)
         .then(project => {
             res.status(201).json(project)
         })
