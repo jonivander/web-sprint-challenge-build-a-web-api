@@ -113,6 +113,8 @@ function validateProjectId(req, res, next) {
     .catch(error => {
         res.status(500).json({ message: error.message });
     });
+
+    next(); 
 }
 
 module.exports = router; 
